@@ -76,7 +76,7 @@ function App() {
             <Navbar bg="dark" data-bs-theme="dark" className="nav">
                 <Container>
                     <Nav className="me-auto">
-                        <Nav.Link href="#home">빵이름 맞추기 게임</Nav.Link>
+                        <Nav.Link href="#home"><img src="/Logo.png" alt="로고"/> 빵이름 맞추기 게임</Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>
