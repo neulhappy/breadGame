@@ -141,7 +141,7 @@ function App() {
                     </div>
 
                     <div className="container">
-                        <div className="row">
+                        <div className="item">
                             {items.map((item) => (
                                 <Product
                                     key={item.id}
@@ -186,14 +186,10 @@ function App() {
 function Product({ title, content, price, imageUrl }) {
     return (
         <ProductContainerStyled>
-            <FlexBox>
-                <FlexItem>
-                    <ImageThumbnailStyled src={imageUrl} alt={title} />
-                    <h4>{title}</h4>
-                    <p>{content}</p>
-                    <p>{price}원</p>
-                </FlexItem>
-            </FlexBox>
+            <ImageThumbnailStyled src={imageUrl} alt={title} />
+            <h4>{title}</h4>
+            <p>{content}</p>
+            <p>{price}원</p>
         </ProductContainerStyled>
     );
 }

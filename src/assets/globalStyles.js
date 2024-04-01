@@ -18,6 +18,7 @@ export const GlobalStyles = createGlobalStyle`
   body {
     margin: 0;
     width: 100%;
+    height: 100%;
     font-family: 'KCC-Ganpan', 'sans-serif';
     text-align: center;
     background-color: #282c34;
@@ -34,12 +35,13 @@ export const GlobalStyles = createGlobalStyle`
     padding-top: 250px;
     color: #591F07;
   }
-  .row {
+  .item {
     font-family: 'KCC-Ganpan','sans-serif';
     padding-top: 400px;
     padding-left: 62px;
     padding-right: 69px;
     border-radius: 10px;
+    display: flex;
   }
 
   body  .App  .nav {
@@ -78,7 +80,8 @@ export const GlobalStyles = createGlobalStyle`
   }
   .game{
     font-family: 'KCC-Ganpan','sans-serif';
-    padding-top: 15px;
+    padding: 15px 0;
+    margin-top: -15px;
   }
   .game button {
     margin-top: -10px;
@@ -126,7 +129,7 @@ export const GlobalStyles = createGlobalStyle`
     background: #591F07;
   }
   .Toastify__toast-container--top-center {
-    top: 87%;
+    top: 85.5%;
   }
   
 `;
