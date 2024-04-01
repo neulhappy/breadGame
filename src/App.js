@@ -12,10 +12,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
-    const [items, setItems] = useState(data); // 초기화 시 isAnswered 속성을 추가하지 않음
+    const [items, setItems] = useState(data);
     const [guess, setGuess] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
     const inputRefs = useRef([]);
+    const [allAnswered, setAllAnswered] = useState(false);
+
 
     useEffect(() => {
         if (selectedItem) {
@@ -24,11 +26,36 @@ function App() {
         }
     }, [selectedItem]);
 
+
+    const resetGame = () => {
+        const resetItems = items.map(item => {
+            let initialContent = "";
+            if (item.id === 0) {
+                initialContent = "B▢▢▢▢";
+            } else if (item.id === 1) {
+                initialContent = "C▢▢▢";
+            } else if (item.id === 2) {
+                initialContent = "C▢▢▢▢▢";
+            }
+            return { ...item, content: initialContent, isAnswered: false };
+        });
+        setItems(resetItems);
+        setSelectedItem(null);
+        setAllAnswered(false);
+    }
+
     const startGame = () => {
-        const randomIndex = Math.floor(Math.random() * items.length);
-        const randomItem = items[randomIndex];
-        setSelectedItem(randomItem);
-        setGuess(Array(randomItem.title.length).fill(''));
+        if (allAnswered) {
+            resetGame();
+        } else {
+            const unansweredItems = items.filter(item => !item.isAnswered);
+            if (unansweredItems.length > 0) {
+                const randomIndex = Math.floor(Math.random() * unansweredItems.length);
+                const randomItem = unansweredItems[randomIndex];
+                setSelectedItem(randomItem);
+                setGuess(Array(randomItem.title.length).fill(''));
+            }
+        }
     };
 
     const handleGuessChange = (value, index) => {
@@ -41,6 +68,17 @@ function App() {
         }
     };
 
+    const handleKeyDown = (e, index) => {
+        if (e.key === "Backspace" && index > 0 && guess[index] === '') {
+            const newGuess = [...guess];
+            newGuess[index - 1] = '';
+            setGuess(newGuess);
+
+            setTimeout(() => inputRefs.current[index - 1].current.focus(), 0);
+        }
+    };
+
+
     const checkGuess = () => {
         const userGuess = guess.join('').toLowerCase();
         if (userGuess === selectedItem.title.toLowerCase()) {
@@ -49,18 +87,19 @@ function App() {
                 autoClose: 1000,
             });
 
-            // 정답을 맞춘 항목의 content만 사용자가 입력한 값으로 업데이트
-            const updatedItems = items.map(item => {
-                if (item.id === selectedItem.id) {
-                    // 오직 content만 업데이트합니다. isAnswered 상태는 변경하지 않습니다.
-                    return { ...item, content: userGuess.toUpperCase() }; // 이제 isAnswered를 수정하지 않습니다.
-                }
-                return item;
-            });
-            setItems(updatedItems);
-            // 항목 리스트에서 아무것도 숨기지 않고, 모든 항목을 계속 표시합니다.
-            // selectedItem을 null로 설정하거나, 다음 항목을 선택하지 않는 로직을 추가할 수도 있습니다.
-            setSelectedItem(null);
+            setTimeout(() => {
+                const updatedItems = items.map(item => {
+                    if (item.id === selectedItem.id) {
+                        return { ...item, content: userGuess.toUpperCase(), isAnswered: true };
+                    }
+                    return item;
+                });
+                setItems(updatedItems);
+                setSelectedItem(null);
+
+                const allItemsAnswered = updatedItems.every(item => item.isAnswered);
+                setAllAnswered(allItemsAnswered);
+            }, 2000);
         } else {
             toast.error('틀렸습니다. 😓', {
                 position: "top-center",
@@ -68,6 +107,7 @@ function App() {
             });
         }
     };
+
 
 
 
@@ -116,6 +156,7 @@ function App() {
                                     maxLength="1"
                                     value={guess[index] || ''}
                                     onChange={(e) => handleGuessChange(e.target.value, index)}
+                                    onKeyDown={(e) => handleKeyDown(e,index)}
                                 />
                             ))}
                             <button onClick={checkGuess} className="btn">정답</button>
@@ -123,7 +164,9 @@ function App() {
                             <ToastContainer/>
                         </div>
                     ) : (
-                        <button onClick={startGame} className="startBtn">게임 시작하기</button>
+                        <button onClick={startGame} className="startBtn">
+                            {allAnswered ? "게임 다시하기" : "게임 시작하기"}
+                        </button>
                     )}
                 </div>
             </div>

@@ -7,7 +7,8 @@ let data = [
         title : "Bread",
         content : "B▢▢▢▢",
         price : 5000,
-        imageUrl: "/bbang.png"
+        imageUrl: "/bbang.png",
+        isAnswered : false
     },
 
     {
@@ -15,7 +16,8 @@ let data = [
         title : "Cake",
         content : "C▢▢▢",
         price : 24000,
-        imageUrl: "/bbang2.png"
+        imageUrl: "/bbang2.png",
+        isAnswered : false
     },
 
     {
@@ -23,7 +25,8 @@ let data = [
         title : "Cookie",
         content : "C▢▢▢▢▢",
         price : 7000,
-        imageUrl: "/bbang3.png"
+        imageUrl: "/bbang3.png",
+        isAnswered: false
     }
 ]
 

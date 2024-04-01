@@ -45,6 +45,7 @@
   }
 }
  body {
+   margin: 0;
   width: 100%;
 }
 
@@ -165,5 +166,5 @@ body  .App  .nav .nav-link {
   background: #591F07;
 }
 .Toastify__toast-container--top-center {
-  top: 79%;
+  top: 87%;
 }
