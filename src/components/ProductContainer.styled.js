@@ -7,8 +7,6 @@ export const ProductContainerStyled = styled.div`
   background: #F4C166;
   color: #591F07;
   width: 1100px;
-  @media (max-width: 768px) {
-  }
 `;
 
 export const FlexBox = styled.div`

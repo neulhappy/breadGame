@@ -15,6 +15,8 @@ export const GlobalStyles = createGlobalStyle`
     font-style: normal;
   }
 
+  
+  
   body {
     margin: 0;
     width: 100%;
@@ -23,7 +25,6 @@ export const GlobalStyles = createGlobalStyle`
     text-align: center;
     background-color: #282c34;
   }
-
   
   .txt, .row, .col-md-4, .nav, .letter-input, .game, .startBtn, .Toastify__toast, .Toastify__progress-bar--bg, .Toastify__toast-icon svg, .Toastify__progress-bar, .Toastify__toast-container--top-center {
     font-family: 'KCC-Ganpan', 'sans-serif';
@@ -35,20 +36,12 @@ export const GlobalStyles = createGlobalStyle`
     padding-top: 250px;
     color: #591F07;
   }
-  .item {
-    font-family: 'KCC-Ganpan','sans-serif';
-    padding-top: 400px;
-    padding-left: 62px;
-    padding-right: 69px;
-    border-radius: 10px;
-    display: flex;
-  }
+
 
   body  .App  .nav {
     font-family: 'KCC-Ganpan','sans-serif';
     background-color: #AB6029!important;
     position: fixed;
-    width: 100%;
     padding: 20px 0;
     margin-left: -30px;
     font-size: 2.3rem;
@@ -60,6 +53,15 @@ export const GlobalStyles = createGlobalStyle`
     color: white;
     text-align: center;
     padding-left: 500px;
+  }
+  
+  .item {
+    font-family: 'KCC-Ganpan','sans-serif';
+    padding-top: 400px;
+    padding-left: 62px;
+    padding-right: 69px;
+    border-radius: 10px;
+    display: flex;
   }
 
   .letter-input {
