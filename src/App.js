@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import logo from './assets/logo.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRedo } from '@fortawesome/free-solid-svg-icons';
 import {Container, Nav, Navbar} from "react-bootstrap";
@@ -7,8 +7,13 @@ import React, {useState, useEffect, useRef} from 'react';
 import Typewriter from 'typewriter-effect';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './App.css';
+import { GlobalStyles } from './assets/globalStyles';
+import { HeaderStyled } from './components/Header.styled';
+import { MainBackgroundStyled } from './components/MainBackground.styled';
+import { ProductContainerStyled, FlexBox, FlexItem } from './components/ProductContainer.styled';
+import { ImageThumbnailStyled } from './components/ImageThumbnail.styled';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 function App() {
@@ -113,74 +118,83 @@ function App() {
 
     return (
         <div className="App">
-            <Navbar bg="dark" data-bs-theme="dark" className="nav">
-                <Container>
-                    <Nav className="me-auto">
-                        <Nav.Link href="#home"><img src="/Logo.png" alt="로고"/> 빵이름 맞추기 게임</Nav.Link>
-                    </Nav>
-                </Container>
-            </Navbar>
-
-            <div className="main_bg">
-                <div className="txt">
-                    <Typewriter
-                        options={{
-                            strings: ['빵집에 오신 것을 환영합니다.', '화면을 내려 문제를 맞추세요.'],
-                            autoStart: true,
-                            loop: true,
-                        }}
-                    />
-                </div>
-
-                <div className="container">
-                    <div className="row">
-                        {items.map((item) => (
-                            <Product
-                                key={item.id}
-                                content={item.content}
-                                price={item.price}
-                                imageUrl={process.env.PUBLIC_URL + item.imageUrl}
-                            />
-                        ))}
+            <GlobalStyles />
+            <HeaderStyled>
+                <Navbar bg="dark" data-bs-theme="dark" className="nav">
+                    <Container>
+                        <Nav className="me-auto">
+                            <Nav.Link href="#home"><img src="/Logo.png" alt="로고"/> 빵이름 맞추기 게임</Nav.Link>
+                        </Nav>
+                    </Container>
+                </Navbar>
+            </HeaderStyled>
+            <MainBackgroundStyled>
+                <div className="main_bg">
+                    <div className="txt">
+                        <Typewriter
+                            options={{
+                                strings: ['빵집에 오신 것을 환영합니다.', '화면을 내려 문제를 맞추세요.'],
+                                autoStart: true,
+                                loop: true,
+                            }}
+                        />
                     </div>
-                </div>
-                <div className="game-section">
-                    {selectedItem ? (
-                        <div className="game">
-                            {selectedItem.title.split('').map((_, index) => (
-                                <input
-                                    key={index}
-                                    ref={inputRefs.current[index]}
-                                    type="text"
-                                    className="letter-input"
-                                    maxLength="1"
-                                    value={guess[index] || ''}
-                                    onChange={(e) => handleGuessChange(e.target.value, index)}
-                                    onKeyDown={(e) => handleKeyDown(e,index)}
+
+                    <div className="container">
+                        <div className="row">
+                            {items.map((item) => (
+                                <Product
+                                    key={item.id}
+                                    content={item.content}
+                                    price={item.price}
+                                    imageUrl={process.env.PUBLIC_URL + item.imageUrl}
                                 />
                             ))}
-                            <button onClick={checkGuess} className="btn">정답</button>
-                            <button onClick={startGame}><FontAwesomeIcon icon={faRedo} /> </button>
-                            <ToastContainer/>
                         </div>
-                    ) : (
-                        <button onClick={startGame} className="startBtn">
-                            {allAnswered ? "게임 다시하기" : "게임 시작하기"}
-                        </button>
-                    )}
+                    </div>
+                    <div className="game-section">
+                        {selectedItem ? (
+                            <div className="game">
+                                {selectedItem.title.split('').map((_, index) => (
+                                    <input
+                                        key={index}
+                                        ref={inputRefs.current[index]}
+                                        type="text"
+                                        className="letter-input"
+                                        maxLength="1"
+                                        value={guess[index] || ''}
+                                        onChange={(e) => handleGuessChange(e.target.value, index)}
+                                        onKeyDown={(e) => handleKeyDown(e,index)}
+                                    />
+                                ))}
+                                <button onClick={checkGuess} className="btn">정답</button>
+                                <button onClick={startGame}><FontAwesomeIcon icon={faRedo} /> </button>
+                                <ToastContainer/>
+                            </div>
+                        ) : (
+                            <button onClick={startGame} className="startBtn">
+                                {allAnswered ? "게임 다시하기" : "게임 시작하기"}
+                            </button>
+                        )}
+                    </div>
                 </div>
-            </div>
+            </MainBackgroundStyled>
         </div>
     );
 }
+
 function Product({ title, content, price, imageUrl }) {
     return (
-        <div className="col-md-4">
-            <img className="image-thumbnail" src={imageUrl} alt={title} />
-            <h4>{title}</h4>
-            <p>{content}</p>
-            <p>{price}원</p>
-        </div>
+        <ProductContainerStyled>
+            <FlexBox>
+                <FlexItem>
+                    <ImageThumbnailStyled src={imageUrl} alt={title} />
+                    <h4>{title}</h4>
+                    <p>{content}</p>
+                    <p>{price}원</p>
+                </FlexItem>
+            </FlexBox>
+        </ProductContainerStyled>
     );
 }
 export default App;
